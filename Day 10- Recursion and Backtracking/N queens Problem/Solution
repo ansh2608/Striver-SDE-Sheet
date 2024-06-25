@@ -1,0 +1,43 @@
+import java.util.ArrayList;
+class Solution {
+    public static ArrayList<Integer> construct(int[][] board){
+        ArrayList<Integer> ans=new ArrayList<>();
+        for(int i=0;i<board.length;i++){
+            int[] temp=board[i];
+            ans.add(board[i]);
+        }
+        return ans;
+    }
+    public static void helper(int col,char[][] board,ArrayList<ArrayList<Integer>> ans,int[] leftRow,int[] lowerDiagonal,int[] upperDiagonal){
+        if(col==board.length){
+            ans.add(construct(board));
+            return;
+        }
+        for(int row=0;row<board.length;row++){
+            if(leftRow[row]==0 && lowerDiagonal[row+col]==0 && upperDiagonal[board.length-1+col-row]){
+                board[i][j]=1;
+                leftRow[row]=1;
+                lowerDiagonal[row+col]=1;
+                upperDiagonal[board.length-1+col-row]=1;
+                helper(col+1,board,ans,leftRow,lowerDiagonal,upperDiagonal); 
+                board[i][j]=0;
+                leftRow[row]=0;
+                lowerDiagonal[row+col]=0;
+                upperDiagonal[board.length-1+col-row]=0;
+            }
+        }
+    }
+    public static ArrayList<ArrayList<Integer>> solveNQueens(int n) {
+        int[][] board=new int[n][n];
+        ArrayList<ArrayList<Integer>> ans=new ArrayList<>();
+        int[] leftRow=new int[n];
+        int[] lowerDiagonal=new int[n];
+        int[] upperDiagonal=new int[n];
+        helper(0,board,ans,leftRow,lowerDiagonal,upperDiagonal); 
+        return ans;
+    }
+    public static void main(String[] args){
+        int n=4;
+        System.out.println(solveNQueens(n));
+    }
+}
